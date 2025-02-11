@@ -14,7 +14,7 @@ def hello_world(request):
 
     model_artifact = Client().get_artifact_version("62efc70b-2133-497d-94f5-cfb4ff03f4fa")
     model = model_artifact.load()
-    text= 'great ,  i am  rich'
+    text= 'bad news'
     text = [text]
     prediction =  model.predict(vectorizer.transform(text))
     return HttpResponse(prediction)
