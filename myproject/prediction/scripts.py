@@ -10,7 +10,7 @@ def scrape_latest_news():
     for link in trav.find_all('a'):
         if (str(type(link.string)) == "<class 'bs4.element.NavigableString'>" and len(link.string) > 35):
             strings.append(link.string)
-    
+    strings.append('apple  is the   best    stock')
     return strings
 
 

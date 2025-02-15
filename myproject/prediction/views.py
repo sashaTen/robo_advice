@@ -11,20 +11,23 @@ from zenml.client import Client
 
 
 def hello_world(request):
-   
- 
   return render(request ,   'hello.html')
 
 
 
 def testing(request):
+    vectorize_artifact = Client().get_artifact_version("9f42ba36-0287-4b1e-aaa9-46fbb54d45f4")
+    vectorizer = vectorize_artifact .load()
+    model_artifact = Client().get_artifact_version("62efc70b-2133-497d-94f5-cfb4ff03f4fa")
+    model = model_artifact.load()
     if request.method == "POST":
         ticker = request.POST.get("ticker")  # Get the text input from form
         company = request.POST.get("company")
         strings = scrape_latest_news()
         company_news = filter_strings(strings ,    company)
         if company_news:
-          return HttpResponse(f"news  found: {company_news }")  # Simple response for now
+          prediction =  model.predict(vectorizer.transform(company_news))
+          return HttpResponse(f"news  found: {company_news},     the  predicted  sentiment  :     {prediction}")  # Simple response for now
         else   :
           return HttpResponse('news related to stock are  not    found ') 
 
