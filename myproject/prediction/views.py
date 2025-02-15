@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .scraping  import scrape_latest_news
+from .scripts  import scrape_latest_news , filter_strings
 # Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -12,16 +12,21 @@ from zenml.client import Client
 
 def hello_world(request):
    
-   
-        
-    return render(request ,   'hello.html')
+ 
+  return render(request ,   'hello.html')
 
 
 
 def testing(request):
     if request.method == "POST":
-        user_input = request.POST.get("text_input")  # Get the text input from form
-        return HttpResponse(f"You entered: {user_input}")  # Simple response for now
+        ticker = request.POST.get("ticker")  # Get the text input from form
+        company = request.POST.get("company")
+        strings = scrape_latest_news()
+        company_news = filter_strings(strings ,    company)
+        if company_news:
+          return HttpResponse(f"news  found: {company_news }")  # Simple response for now
+        else   :
+          return HttpResponse('news related to stock are  not    found ') 
 
     return HttpResponse("Invalid request")
 
@@ -37,9 +42,9 @@ def  prediction_result(request):
     text = [text]
     strings = scrape_latest_news()
     prediction =  model.predict(vectorizer.transform(strings))
-    strings = scrape_latest_news()
+    
     return   HttpResponse( prediction )
 
 
 
-#   python  manage.py runserver 
+#   python  manage.py runserver     python manage.py migrate

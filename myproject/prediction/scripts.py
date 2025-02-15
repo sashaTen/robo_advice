@@ -16,3 +16,6 @@ def scrape_latest_news():
 
 
 
+def filter_strings(strings_array, string):
+    return [s for s in strings_array if string in s]
+
