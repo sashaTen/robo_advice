@@ -2,8 +2,11 @@ from django.shortcuts import render
 from .scraping  import scrape_latest_news
 # Create your views here.
 from django.http import HttpResponse
+from django.shortcuts import render
 from .pipeline  import   sentiment_analysis_pipeline
 from zenml.client import Client
+
+
 
 
 
@@ -11,9 +14,14 @@ def hello_world(request):
    
    
         
-    return HttpResponse('hello ')
+    return render(request ,   'hello.html')
 
 
+
+def  testing(request):
+    return   HttpResponse('testing')
+
+# https://raw.githubusercontent.com/sashaTen/investment_app/refs/heads/main/invest/S%26P500data/clusters_df.csv
 
 
 def  prediction_result(request):
