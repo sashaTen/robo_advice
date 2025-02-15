@@ -19,3 +19,22 @@ def scrape_latest_news():
 def filter_strings(strings_array, string):
     return [s for s in strings_array if string in s]
 
+
+
+def get_stock_data(ticker , class_name = "Yfwt5"):
+    url = f'https://www.google.com/finance/quote/{ticker}?hl=en'
+    response = req.get(url)
+    soup = BS(response.content, 'html.parser')
+    html = BS(response.text, "html.parser")
+    stock_data = {}
+    stock_data['title'] = soup.find('div', class_='zzDege').text
+    stock_data['price'] = soup.find('div', class_='AHmHk').text
+    stock_data['price_change'] = soup.find('div', class_='JwB6zf').text
+    elements = html.find_all("div", class_=class_name)
+    
+    for e in elements:
+        print(e.text.strip())
+    
+    return stock_data
+
+#print(get_stock_data('AAPL:NASDAQ'))
