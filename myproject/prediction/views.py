@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .scraping  import scrape_latest_news
 # Create your views here.
 from django.http import HttpResponse
 from .pipeline  import   sentiment_analysis_pipeline
@@ -16,7 +16,11 @@ def hello_world(request):
     model = model_artifact.load()
     text= 'bad news'
     text = [text]
-    prediction =  model.predict(vectorizer.transform(text))
+    strings = scrape_latest_news()
+    prediction =  model.predict(vectorizer.transform(strings))
+    strings = scrape_latest_news()
+   
+        
     return HttpResponse(prediction)
 
 
