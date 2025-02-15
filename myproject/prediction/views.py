@@ -25,4 +25,10 @@ def hello_world(request):
 
 
 
+
+def  prediction_result(request):
+  return   HttpResponse('prediction ')
+
+
+
 #   python  manage.py runserver 
