@@ -18,8 +18,12 @@ def hello_world(request):
 
 
 
-def  testing(request):
-    return   HttpResponse('testing')
+def testing(request):
+    if request.method == "POST":
+        user_input = request.POST.get("text_input")  # Get the text input from form
+        return HttpResponse(f"You entered: {user_input}")  # Simple response for now
+
+    return HttpResponse("Invalid request")
 
 # https://raw.githubusercontent.com/sashaTen/investment_app/refs/heads/main/invest/S%26P500data/clusters_df.csv
 

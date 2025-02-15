@@ -7,5 +7,11 @@
 </head>
 <body>
     <h1>this is the   hello   template</h1>
+    <form action="{% url 'testing' %}" method="post">
+        {% csrf_token %}
+        <label for="text_input">Enter Text:</label>
+        <input type="text" id="text_input" name="text_input" required>
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
