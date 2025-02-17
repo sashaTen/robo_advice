@@ -40,15 +40,23 @@ def prediction_result(request):
 # https://raw.githubusercontent.com/sashaTen/investment_app/refs/heads/main/invest/S%26P500data/clusters_df.csv
 
 
-def  testing(request):
-    
 
-# Define the ticker symbol
-     if request.method == "POST":
-        ticker = request.POST.get("ticker") # Replace with your desired ticker symbol
-        data = yf.download(ticker, start="2024-01-01", end="2025-01-01")
+def testing(request):
+    stock_data = None  # Default to None if no data is available
 
-     return   HttpResponse( data.shape)
+    if request.method == "POST":
+        ticker = request.POST.get("ticker")  # Get the stock ticker from form input
+
+        if ticker:
+            # Fetch stock data
+            data = yf.download(ticker, start="2024-01-01", end="2025-01-01")
+            
+            if not data.empty:
+                # Convert DataFrame to a format suitable for Django templates
+                stock_data = data.reset_index().to_dict(orient="records")
+
+    return render(request, "check_data.html", {"stock_data": stock_data})
+
 
 
 
