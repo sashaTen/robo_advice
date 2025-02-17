@@ -5,7 +5,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .pipeline  import   sentiment_analysis_pipeline
 from zenml.client import Client
-
+import yfinance as yf
 
 
 
@@ -42,8 +42,13 @@ def prediction_result(request):
 
 def  testing(request):
     
-    
-    return   HttpResponse( 'gggg')
+
+# Define the ticker symbol
+     if request.method == "POST":
+        ticker = request.POST.get("ticker") # Replace with your desired ticker symbol
+        data = yf.download(ticker, start="2024-01-01", end="2025-01-01")
+
+     return   HttpResponse( data.shape)
 
 
 
