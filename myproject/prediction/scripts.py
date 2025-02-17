@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup as BS
 import requests as req
 
-def scrape_latest_news():
+def scrape_latest_news(ticker):
     url = "https://www.businesstoday.in/latest/economy"
     webpage = req.get(url)
     trav = BS(webpage.content, "html.parser")
@@ -10,7 +10,8 @@ def scrape_latest_news():
     for link in trav.find_all('a'):
         if (str(type(link.string)) == "<class 'bs4.element.NavigableString'>" and len(link.string) > 35):
             strings.append(link.string)
-    strings.append('apple  is the   best    stock')
+    
+    
     return strings
 
 
@@ -31,10 +32,12 @@ def get_stock_data(ticker , class_name = "Yfwt5"):
     stock_data['price'] = soup.find('div', class_='AHmHk').text
     stock_data['price_change'] = soup.find('div', class_='JwB6zf').text
     elements = html.find_all("div", class_=class_name)
-    
+    news =  []
     for e in elements:
-        print(e.text.strip())
+        news.append((e.text.strip()))
     
-    return stock_data
-
-#print(get_stock_data('AAPL:NASDAQ'))
+    return stock_data , news
+strings = []
+stock_data , news =  get_stock_data('AAPL:NASDAQ')
+#  print(type( elements[0]))
+      
