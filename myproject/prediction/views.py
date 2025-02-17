@@ -6,7 +6,9 @@ from django.shortcuts import render
 from .pipeline  import   sentiment_analysis_pipeline
 from zenml.client import Client
 import yfinance as yf
-
+import io
+import base64
+import matplotlib.pyplot as plt
 
 
 
@@ -42,21 +44,33 @@ def prediction_result(request):
 
 
 def testing(request):
-    stock_data = None  # Default to None if no data is available
+    chart = None  # Default to None if no data is available
 
     if request.method == "POST":
-        ticker = request.POST.get("ticker")  # Get the stock ticker from form input
+        ticker = request.POST.get("ticker")  # Get ticker from form input
 
         if ticker:
             # Fetch stock data
             data = yf.download(ticker, start="2024-01-01", end="2025-01-01")
-            
+
             if not data.empty:
-                # Convert DataFrame to a format suitable for Django templates
-                stock_data = data.reset_index().to_dict(orient="records")
+                # Create a plot
+                plt.figure(figsize=(10, 5))
+                plt.plot(data.index, data['Close'], label=f"{ticker} Closing Price")
+                plt.xlabel("Date")
+                plt.ylabel("Price (USD)")
+                plt.title(f"{ticker} Stock Closing Prices (2024)")
+                plt.legend()
+                plt.grid()
 
-    return render(request, "check_data.html", {"stock_data": stock_data})
+                # Convert plot to base64 image
+                buffer = io.BytesIO()
+                plt.savefig(buffer, format="png")
+                buffer.seek(0)
+                chart = base64.b64encode(buffer.getvalue()).decode()
+                buffer.close()
 
+    return render(request, "check_data.html", {"chart": chart})
 
 
 
