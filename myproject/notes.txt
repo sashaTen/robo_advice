@@ -1,0 +1,3 @@
+https://raw.githubusercontent.com/sashaTen/investment_app/refs/heads/main/invest/S%26P500data/clusters_df.csv     
+here  look  ofr hte  company 
+LNT	0.1112468521377278	0.229334977154946	Alliant Energy Corporation

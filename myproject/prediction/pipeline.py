@@ -141,3 +141,7 @@ def sentiment_analysis_pipeline():
     vectorizer, X_train_vec, X_test_vec   =vectorize_text(train_headlines, test_headlines)
     model  =  train_model( X_train_vec,  y_train)
     accuracy =  evaluate_model(model, X_test_vec, y_test)
+
+
+
+

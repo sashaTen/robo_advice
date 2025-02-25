@@ -26,13 +26,13 @@ def prediction_result(request):
         ticker = request.POST.get("ticker")  # Get the text input from form
         company = request.POST.get("company")
         strings = scrape_latest_news( ticker)
-        stock_data , news =  get_stock_data(f"{ticker}:NASDAQ")
+        news =  get_stock_data(f"{ticker}:NASDAQ")
         company_news = filter_strings(strings ,    company)
         for  i in news :
          company_news .append(i)
         if company_news:
           prediction =  model.predict(vectorizer.transform(company_news))
-          return HttpResponse(f"news  found: {company_news},     the  predicted  sentiment  :     {prediction}")  # Simple response for now
+          return HttpResponse(f"news  found: {company_news},     the  predicted  sentiment  :     {prediction} ")  # Simple response for now
         else   :
           return HttpResponse('news related to stock are  not    found ') 
         

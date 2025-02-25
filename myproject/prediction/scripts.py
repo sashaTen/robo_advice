@@ -21,23 +21,24 @@ def filter_strings(strings_array, string):
     return [s for s in strings_array if string in s]
 
 
+import requests as req
+from bs4 import BeautifulSoup as BS
 
-def get_stock_data(ticker , class_name = "Yfwt5"):
+def get_stock_data(ticker, class_name="Yfwt5"):
     url = f'https://www.google.com/finance/quote/{ticker}?hl=en'
     response = req.get(url)
-    soup = BS(response.content, 'html.parser')
+
+    if response.status_code != 200:
+        return [f"{ticker} was not found"]
+
     html = BS(response.text, "html.parser")
-    stock_data = {}
-    stock_data['title'] = soup.find('div', class_='zzDege').text
-    stock_data['price'] = soup.find('div', class_='AHmHk').text
-    stock_data['price_change'] = soup.find('div', class_='JwB6zf').text
     elements = html.find_all("div", class_=class_name)
-    news =  []
-    for e in elements:
-        news.append((e.text.strip()))
-    
-    return stock_data , news
-strings = []
-stock_data , news =  get_stock_data('AAPL:NASDAQ')
+
+    news = [e.text.strip() for e in elements] if elements else ["neutral"]
+
+    return news
+
+
+#stock_data , news =  get_stock_data('AAPL:NASDAQ')
 #  print(type( elements[0]))
       
