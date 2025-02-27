@@ -1,3 +1,19 @@
 https://raw.githubusercontent.com/sashaTen/investment_app/refs/heads/main/invest/S%26P500data/clusters_df.csv     
 here  look  ofr hte  company 
 LNT	0.1112468521377278	0.229334977154946	Alliant Energy Corporation
+
+
+average_sentiment =round(sum(prediction) / len(prediction))
+          company_news_single_str   =  " ".join(company_news)
+          price_change = get_price_change(ticker)
+          save_news_with_sentiment(company_news ,  average_sentiment  , price_change)
+
+
+
+           today_price = stock_data['Close'].iloc[-1]  # Today's closing price
+    yesterday_price = stock_data['Close'].iloc[-2]  # Yesterday's closing price
+    
+    if  today_price  > yesterday_price  :
+        return 1
+    else :
+        return  0

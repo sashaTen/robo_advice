@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .scripts  import scrape_latest_news , filter_strings ,get_stock_data , save_news_with_sentiment
+from .scripts  import scrape_latest_news , filter_strings ,get_stock_data , save_news_with_sentiment ,get_price_change
 # Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 
 def hello_world(request):
-  save_news_with_sentiment('good  new   for   apple' ,  1 , 1)
+  print("yfinance version:", yf.__version__)
   return render(request ,   'hello.html')
 
 
@@ -33,7 +33,11 @@ def prediction_result(request):
          company_news .append(i)
         if company_news:
           prediction =  model.predict(vectorizer.transform(company_news))
-          return HttpResponse(f"news  found: {company_news},     the  predicted  sentiment  :     {prediction} ")  # Simple response for now
+          company_news_single_str   =  " ".join(company_news)
+          average_sentiment =round(sum(prediction) / len(prediction))
+        
+          save_news_with_sentiment(company_news_single_str  ,  average_sentiment  ,1)
+          return HttpResponse(f"news  found: {company_news_single_str },     the  predicted  sentiment  :     {prediction} ")  # Simple response for now
         else   :
           return HttpResponse('news related to stock are  not    found ') 
         
@@ -45,33 +49,9 @@ def prediction_result(request):
 
 
 def testing(request):
-    chart = None  # Default to None if no data is available
+  
 
-    if request.method == "POST":
-        ticker = request.POST.get("ticker")  # Get ticker from form input
-
-        if ticker:
-            # Fetch stock data
-            data = yf.download(ticker, start="2024-01-01", end="2025-01-01")
-
-            if not data.empty:
-                # Create a plot
-                plt.figure(figsize=(10, 5))
-                plt.plot(data.index, data['Close'], label=f"{ticker} Closing Price")
-                plt.xlabel("Date")
-                plt.ylabel("Price (USD)")
-                plt.title(f"{ticker} Stock Closing Prices (2024)")
-                plt.legend()
-                plt.grid()
-
-                # Convert plot to base64 image
-                buffer = io.BytesIO()
-                plt.savefig(buffer, format="png")
-                buffer.seek(0)
-                chart = base64.b64encode(buffer.getvalue()).decode()
-                buffer.close()
-
-    return render(request, "check_data.html", {"chart": chart})
+    return HttpResponse('test')
 
 
 

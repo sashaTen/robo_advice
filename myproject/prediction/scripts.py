@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup as BS
 import requests as req
 from .models import NewsArticle
 from datetime import datetime
-
+import yfinance as yf
 
 
 def scrape_latest_news(ticker):
@@ -55,5 +55,19 @@ def save_news_with_sentiment(content, sentiment,  real_price_change):
         real_price_change= real_price_change,
         scraped_at=datetime.now()
     )
+
+
+
+
+def get_price_change(ticker):
+ 
+    # Download last 2 days of stock data
+    stock_data = yf.download(ticker, period="10d")
+
+    # Ensure at least 2 data points are available
+   
+
+    # Calculate the price change
+    print(stock_data['Close'].iloc[-1] )
 
 
