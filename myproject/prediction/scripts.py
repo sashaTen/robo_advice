@@ -1,5 +1,9 @@
 from bs4 import BeautifulSoup as BS
 import requests as req
+from .models import NewsArticle
+from datetime import datetime
+
+
 
 def scrape_latest_news(ticker):
     url = "https://www.businesstoday.in/latest/economy"
@@ -42,3 +46,14 @@ def get_stock_data(ticker, class_name="Yfwt5"):
 #stock_data , news =  get_stock_data('AAPL:NASDAQ')
 #  print(type( elements[0]))
       
+
+
+def save_news_with_sentiment(content, sentiment,  real_price_change):
+    article = NewsArticle.objects.create(
+        content=content,
+        sentiment=sentiment,
+        real_price_change= real_price_change,
+        scraped_at=datetime.now()
+    )
+
+

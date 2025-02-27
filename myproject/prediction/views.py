@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .scripts  import scrape_latest_news , filter_strings ,get_stock_data
+from .scripts  import scrape_latest_news , filter_strings ,get_stock_data , save_news_with_sentiment
 # Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 
 
 def hello_world(request):
+  save_news_with_sentiment('good  new   for   apple' ,  1 , 1)
   return render(request ,   'hello.html')
 
 
