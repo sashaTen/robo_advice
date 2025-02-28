@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 
 
 def hello_world(request):
-  print("yfinance version:", yf.__version__)
-  return render(request ,   'hello.html')
+  sentiment_analysis_pipeline()
+  return HttpResponse('hello    world')
 
 
 

@@ -17,3 +17,12 @@ average_sentiment =round(sum(prediction) / len(prediction))
         return 1
     else :
         return  0
+
+
+
+
+    
+     
+     y_pred_tree = model_tree.predict(X_test_vec)
+     accuracy_tree = accuracy_score(y_test, y_pred_tree)
+      accuracy_tree

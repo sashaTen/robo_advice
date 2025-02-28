@@ -12,7 +12,8 @@ from zenml import pipeline
 from zenml.steps import step
 from scipy.sparse import csr_matrix
 # Define the pipeline steps
-
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.tree import DecisionTreeClassifier
 @step
 def load_df_original_csv() -> pd.DataFrame:
     df = pd.read_csv(r'C:\Users\HP\Desktop\portfolio_app\data\Data.csv',encoding='ISO-8859-1')
@@ -113,15 +114,43 @@ def  train_model(X_train_vec: csr_matrix, y_train: pd.Series) ->LogisticRegressi
     model.fit(X_train_vec, y_train)
     return model
 
+
+@step
+def train_nb_model(X_train_vec: csr_matrix, y_train: pd.Series) ->MultinomialNB:
+    model_nb =  MultinomialNB()
+    model_nb.fit(X_train_vec, y_train)
+    return  model_nb
+
+
+@step
+def    train_tree(X_train_vec: csr_matrix, y_train: pd.Series) ->DecisionTreeClassifier:
+    model_tree =    DecisionTreeClassifier()
+    model_tree.fit(X_train_vec ,   y_train)
+    return    model_tree
+
+
+
 # Step 5: Evaluate the model
 @step
-def  evaluate_model(model:LogisticRegression, X_test_vec: csr_matrix, y_test: pd.Series) -> float:
+def  evaluate_model(model:LogisticRegression, X_test_vec: csr_matrix, y_test: pd.Series  ) ->  float:
     y_pred = model.predict(X_test_vec)
     accuracy = accuracy_score(y_test, y_pred)
-    return   accuracy
+    return   accuracy 
+
+
+@step
+def  evaluate_model_nb(model_nb:MultinomialNB, X_test_vec: csr_matrix, y_test: pd.Series  ) ->  float:
+    y_pred_nb  =   model_nb.predict(X_test_vec)
+    accuracy_nb   =   accuracy_score(y_test, y_pred_nb)
+    return   accuracy_nb 
 
 
 
+@step
+def  evaluate_model_tree(model_tree: DecisionTreeClassifier, X_test_vec: csr_matrix, y_test: pd.Series  ) ->  float:
+     y_pred_tree = model_tree.predict(X_test_vec)
+     accuracy_tree = accuracy_score(y_test, y_pred_tree)
+     return   accuracy_tree
 
 
         
@@ -140,7 +169,12 @@ def sentiment_analysis_pipeline():
     train_headlines, test_headlines  = apply_porter_stemmer( train_headlines, test_headlines )
     vectorizer, X_train_vec, X_test_vec   =vectorize_text(train_headlines, test_headlines)
     model  =  train_model( X_train_vec,  y_train)
+    model_nb  = train_nb_model( X_train_vec,  y_train)
+    model_tree  =  train_tree( X_train_vec,  y_train)
     accuracy =  evaluate_model(model, X_test_vec, y_test)
+    accuracy_nb =  evaluate_model_nb(model_nb, X_test_vec, y_test)
+    accuracy_tree  =  evaluate_model_tree(model_tree, X_test_vec, y_test)
+    
 
 
 
