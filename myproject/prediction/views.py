@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .scripts  import scrape_latest_news , filter_strings ,get_stock_data , save_news_with_sentiment ,get_price_change
+from .scripts  import scrape_latest_news , filter_strings ,get_stock_data , save_news_with_sentiment , get_price_change
 # Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -28,6 +28,11 @@ def hello_world(request):
   print(   '    tree  accuracy   ,    ' ,    dataTree)
   '''
  
+ 
+  
+
+
+
   return render(request ,  'hello.html')
 
 
@@ -49,8 +54,8 @@ def prediction_result(request):
           prediction =  model.predict(vectorizer.transform(company_news))
           company_news_single_str   =  " ".join(company_news)
           average_sentiment =round(sum(prediction) / len(prediction))
-        
-          save_news_with_sentiment(company_news_single_str  ,  average_sentiment  ,1)
+          price_change =  get_price_change(ticker)
+          save_news_with_sentiment(company_news_single_str  ,  average_sentiment  ,price_change)
           return HttpResponse(f"news  found: {company_news_single_str },     the  predicted  sentiment  :     {prediction} ")  # Simple response for now
         else   :
           return HttpResponse('news related to stock are  not    found ') 

@@ -59,15 +59,20 @@ def save_news_with_sentiment(content, sentiment,  real_price_change):
 
 
 
-def get_price_change(ticker):
- 
-    # Download last 2 days of stock data
-    stock_data = yf.download(ticker, period="10d")
 
-    # Ensure at least 2 data points are available
-   
+def get_price_change(stock_symbol):
+  
+    # Fetch stock data
+    data = yf.download(stock_symbol,period ="2d")
 
-    # Calculate the price change
-    print(stock_data['Close'].iloc[-1] )
+    yesterday_price = data['Close'].iloc[-2].item()  # Convert Series to scalar
+    today_price = data['Close'].iloc[-1].item()  # Convert Series to scalar
+
+    # Calculate price change indicator
+    return 1 if today_price >= yesterday_price else 0
+
+
+
+
 
 
