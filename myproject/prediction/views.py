@@ -13,8 +13,20 @@ import matplotlib.pyplot as plt
 
 
 def hello_world(request):
-  sentiment_analysis_pipeline()
-  return HttpResponse('hello    world')
+  
+  artifact_log = Client().get_artifact_version("9e8d22cf-4df8-418d-a9c3-4244af505f36")
+  data_log = artifact_log.load()
+
+  artifact_nb = Client().get_artifact_version("8e81134c-7c28-49e1-ac13-f33bab935b23")
+  data_nb = artifact_nb.load()
+
+  artifactTree = Client().get_artifact_version("51404133-bb64-4f1a-adaa-ac3c8fa94cb9")
+  dataTree = artifactTree.load()
+
+  print('   log regression    accuracy ,  '   ,data_log)
+  print('  nb  accuracy ',   data_nb )
+  print(   '    tree  accuracy   ,    ' ,    dataTree)
+  return render(request ,  'hello.html')
 
 
 
