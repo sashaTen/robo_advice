@@ -13,8 +13,8 @@ import matplotlib.pyplot as plt
 
 
 def hello_world(request):
-  
-  artifact_log = Client().get_artifact_version("9e8d22cf-4df8-418d-a9c3-4244af505f36")
+  '''
+   artifact_log = Client().get_artifact_version("9e8d22cf-4df8-418d-a9c3-4244af505f36")
   data_log = artifact_log.load()
 
   artifact_nb = Client().get_artifact_version("8e81134c-7c28-49e1-ac13-f33bab935b23")
@@ -26,6 +26,8 @@ def hello_world(request):
   print('   log regression    accuracy ,  '   ,data_log)
   print('  nb  accuracy ',   data_nb )
   print(   '    tree  accuracy   ,    ' ,    dataTree)
+  '''
+ 
   return render(request ,  'hello.html')
 
 
@@ -33,7 +35,7 @@ def hello_world(request):
 def prediction_result(request):
     vectorize_artifact = Client().get_artifact_version("9f42ba36-0287-4b1e-aaa9-46fbb54d45f4")
     vectorizer = vectorize_artifact .load()
-    model_artifact = Client().get_artifact_version("62efc70b-2133-497d-94f5-cfb4ff03f4fa")
+    model_artifact = Client().get_artifact_version("0eef78a6-cfbb-411b-b397-20fe4f07b997")
     model = model_artifact.load()
     if request.method == "POST":
         ticker = request.POST.get("ticker")  # Get the text input from form
