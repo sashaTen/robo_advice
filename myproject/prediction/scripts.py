@@ -3,7 +3,7 @@ import requests as req
 from .models import NewsArticle
 from datetime import datetime
 import yfinance as yf
-
+from  .models import NewsArticle , Count
 
 def scrape_latest_news(ticker):
     url = "https://www.businesstoday.in/latest/economy"
@@ -56,6 +56,12 @@ def save_news_with_sentiment(content, sentiment,  real_price_change):
         scraped_at=datetime.now()
     )
 
+def   save_count(count):
+    obj = Count.objects.first()
+    obj.count   =   obj.count +1
+    obj.save()
+    print(obj)
+
 
 
 
@@ -73,6 +79,7 @@ def get_price_change(stock_symbol):
 
 
 
-
-
-
+def   auto_retrain():
+    count = NewsArticle.objects.count()
+    print("Total count:", count)
+    return count

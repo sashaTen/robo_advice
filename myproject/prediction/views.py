@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .scripts  import scrape_latest_news , filter_strings ,get_stock_data , save_news_with_sentiment , get_price_change
+from .scripts  import scrape_latest_news , filter_strings ,get_stock_data , save_news_with_sentiment , get_price_change , auto_retrain , save_count
 # Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -13,6 +13,7 @@ import matplotlib.pyplot as plt
 
 
 def hello_world(request):
+  
   '''
    artifact_log = Client().get_artifact_version("9e8d22cf-4df8-418d-a9c3-4244af505f36")
   data_log = artifact_log.load()
@@ -31,13 +32,14 @@ def hello_world(request):
  
   
 
-
+  save_count(5)
 
   return render(request ,  'hello.html')
 
 
 
 def prediction_result(request):
+    auto_retrain()
     vectorize_artifact = Client().get_artifact_version("9f42ba36-0287-4b1e-aaa9-46fbb54d45f4")
     vectorizer = vectorize_artifact .load()
     model_artifact = Client().get_artifact_version("0eef78a6-cfbb-411b-b397-20fe4f07b997")

@@ -10,3 +10,9 @@ class NewsArticle(models.Model):
    
 
 #     python manage.py   makemigrations     migrate 
+
+
+
+class   Count(models.Model):
+    count   =    models.IntegerField()
+    
