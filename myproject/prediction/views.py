@@ -32,7 +32,7 @@ def hello_world(request):
  
   
 
-  save_count(5)
+  auto_retrain(14)
 
   return render(request ,  'hello.html')
 
