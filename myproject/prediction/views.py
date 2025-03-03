@@ -39,7 +39,7 @@ def hello_world(request):
 
 
 def prediction_result(request):
-    auto_retrain()
+    
     vectorize_artifact = Client().get_artifact_version("9f42ba36-0287-4b1e-aaa9-46fbb54d45f4")
     vectorizer = vectorize_artifact .load()
     model_artifact = Client().get_artifact_version("0eef78a6-cfbb-411b-b397-20fe4f07b997")
