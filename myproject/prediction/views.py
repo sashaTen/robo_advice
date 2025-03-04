@@ -1,17 +1,17 @@
 from django.shortcuts import render
-from .scripts  import scrape_latest_news , filter_strings ,get_stock_data , save_news_with_sentiment , get_price_change , auto_retrain ,transform_to_df
+from .scripts  import scrape_latest_news , filter_strings ,get_stock_data , save_news_with_sentiment , get_price_change , auto_retrain
 # Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render
 from .pipeline  import   sentiment_analysis_pipeline
 from zenml.client import Client
 from   .models   import NewsArticle
-
+from   .data_tests   import  test_data
 
 
 def hello_world(request):
-  df = transform_to_df(NewsArticle)
-  print(df.head())
+  test_data(NewsArticle)
+  
   return render(request ,  'hello.html')
 
 
