@@ -84,13 +84,15 @@ def get_price_change(stock_symbol):
 
 
 
-def   auto_retrain(numberForRetrain):
+def   auto_retrain(numberForRetrain , data):
     save_count()
     count = Count.objects.first()
     if  count.count  == numberForRetrain:
+      
         # sentiment_analysis_pipeline()
      print("Total count:", count.count)
-
+     df  = transform_to_df(data)
+     print(df.head())
      count.count   =   0
      count.save()
     return count

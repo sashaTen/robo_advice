@@ -38,7 +38,7 @@ def prediction_result(request):
           price_change =  get_price_change(ticker)
           save_news_with_sentiment(company_news_single_str  ,  average_sentiment  ,price_change)
           if   test_data(NewsArticle) == 1:
-               auto_retrain(3)
+               auto_retrain(3,NewsArticle)
           return HttpResponse(f"news  found: {company_news_single_str },     the  predicted  sentiment  :     {prediction} ")  # Simple response for now
         else   :
           return HttpResponse('news related to stock are  not    found ') 
