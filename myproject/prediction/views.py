@@ -32,7 +32,7 @@ def hello_world(request):
  
   
 
-  auto_retrain(14)
+  
 
   return render(request ,  'hello.html')
 
@@ -58,6 +58,7 @@ def prediction_result(request):
           average_sentiment =round(sum(prediction) / len(prediction))
           price_change =  get_price_change(ticker)
           save_news_with_sentiment(company_news_single_str  ,  average_sentiment  ,price_change)
+          auto_retrain(400)
           return HttpResponse(f"news  found: {company_news_single_str },     the  predicted  sentiment  :     {prediction} ")  # Simple response for now
         else   :
           return HttpResponse('news related to stock are  not    found ') 
