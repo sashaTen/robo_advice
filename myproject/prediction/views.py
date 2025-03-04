@@ -1,39 +1,17 @@
 from django.shortcuts import render
-from .scripts  import scrape_latest_news , filter_strings ,get_stock_data , save_news_with_sentiment , get_price_change , auto_retrain , save_count
+from .scripts  import scrape_latest_news , filter_strings ,get_stock_data , save_news_with_sentiment , get_price_change , auto_retrain ,transform_to_df
 # Create your views here.
 from django.http import HttpResponse
 from django.shortcuts import render
 from .pipeline  import   sentiment_analysis_pipeline
 from zenml.client import Client
-import yfinance as yf
-import io
-import base64
-import matplotlib.pyplot as plt
+from   .models   import NewsArticle
 
 
 
 def hello_world(request):
-  
-  '''
-   artifact_log = Client().get_artifact_version("9e8d22cf-4df8-418d-a9c3-4244af505f36")
-  data_log = artifact_log.load()
-
-  artifact_nb = Client().get_artifact_version("8e81134c-7c28-49e1-ac13-f33bab935b23")
-  data_nb = artifact_nb.load()
-
-  artifactTree = Client().get_artifact_version("51404133-bb64-4f1a-adaa-ac3c8fa94cb9")
-  dataTree = artifactTree.load()
-
-  print('   log regression    accuracy ,  '   ,data_log)
-  print('  nb  accuracy ',   data_nb )
-  print(   '    tree  accuracy   ,    ' ,    dataTree)
-  '''
- 
- 
-  
-
-  
-
+  df = transform_to_df(NewsArticle)
+  print(df.head())
   return render(request ,  'hello.html')
 
 

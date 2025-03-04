@@ -5,6 +5,11 @@ from datetime import datetime
 import yfinance as yf
 from  .models import NewsArticle , Count
 from .pipeline import  sentiment_analysis_pipeline
+import   pandas   as  pd 
+
+
+
+
 def scrape_latest_news(ticker):
     url = "https://www.businesstoday.in/latest/economy"
     webpage = req.get(url)
@@ -89,3 +94,15 @@ def   auto_retrain(numberForRetrain):
      count.count   =   0
      count.save()
     return count
+
+
+
+
+def    transform_to_df(model):
+    df =  model.objects.all().values()
+    df = pd.DataFrame(list(df))
+    return df
+
+
+
+
