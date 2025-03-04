@@ -5,13 +5,14 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .pipeline  import   sentiment_analysis_pipeline
 from zenml.client import Client
-from   .models   import NewsArticle
 from   .data_tests   import  test_data
+from .models  import NewsArticle
 
 
 def hello_world(request):
-  test_data(NewsArticle)
+ 
   
+       
   return render(request ,  'hello.html')
 
 
@@ -36,7 +37,8 @@ def prediction_result(request):
           average_sentiment =round(sum(prediction) / len(prediction))
           price_change =  get_price_change(ticker)
           save_news_with_sentiment(company_news_single_str  ,  average_sentiment  ,price_change)
-          auto_retrain(400)
+          if   test_data(NewsArticle) == 1:
+               auto_retrain(3)
           return HttpResponse(f"news  found: {company_news_single_str },     the  predicted  sentiment  :     {prediction} ")  # Simple response for now
         else   :
           return HttpResponse('news related to stock are  not    found ') 

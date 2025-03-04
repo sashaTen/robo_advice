@@ -20,8 +20,9 @@ def    test_data(data):
     if warnings:
         for warning in warnings:
             print(warning)
+        return 0    
     else:
-        print("✅ DataFrame is valid!")
+        return 1
 
 # Example Usage:
 # Assuming df is your DataFrame
