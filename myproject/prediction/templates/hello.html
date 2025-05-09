@@ -9,11 +9,16 @@
     <h1>analyse   your  stocks </h1>
     <form action="{% url 'prediction_result' %}" method="post">
         {% csrf_token %}
-        <label for="text_input">Enter the  stock ticker like "AAPL" :</label>
+        
+        <label for="ticker">Enter the stock ticker (e.g., "AAPL"):</label>
         <input type="text" id="ticker" name="ticker" required>
-        <label for="text_input">Enter the  company name  like    'apple' :</label>
-        <input type="text" id="company" name="company" required>
+    
+   
+        <label for="sentiment">Enter sentiment :</label>
+        <input type="text" id="sentiment" name="sentiment" required>
+    
         <button type="submit">Submit</button>
     </form>
+    
 </body>
 </html>
